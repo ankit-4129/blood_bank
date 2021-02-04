@@ -3,16 +3,17 @@ const mysql = require("mysql");
 const db = require("../../config/db.js");
 const getPid = (req, res, next) => {
     
-    mail=req.body.email;
+    phone=req.body.phone;
 
     db.query(
-        "SELECT * FROM people WHERE email=?",mail,
+        "SELECT * FROM people WHERE phone_number=?",phone,
         function (error, result, fields) {
           if (error) {
             console.log(error);
           }
           else if(typeof req.body.name==="undefined" && result.length==0){
             req.session.pid=-1;
+            delete req.session.user_exist;
             next();
           }
           else if(result.length==0){
@@ -39,6 +40,7 @@ const getPid = (req, res, next) => {
                 }
                 else
                 {
+                  
                 console.log("inserted into peop;e=",result);  
                 req.session.pid=result.insertId;
                 console.log("req,session.pid=",req.session.pid);
@@ -58,6 +60,7 @@ const getPid = (req, res, next) => {
             
             console.log("at pid");
             req.session.pid=result[0].PID;
+            req.session.user_exist=result;
             next();
             };
           });
