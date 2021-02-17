@@ -111,22 +111,40 @@
               </div>
               <div class="row d-flex justify-content-center">
                   <div class="col-xs-6 mr-20">
-                    <a class="btn-don-req" href="../scan-qr/scan-qr.html"> Scan QR </a>
-                </div>
-            </div>
+                    <button class="btn-don-req" id="btn-scan-qr">Scan QR</button>
+                  </div>
+              </div>
+              <div class="row d-flex justify-content-center">
+                  <canvas hidden="" id="qr-canvas"></canvas>
+              </div>
+              <div class="row d-flex justify-content-center">
+                  <div class="col-xs-6 mr-20">
+                    <button class="btn-primary btn-sm mt-10" hidden="" id="btn-scan-stop"> Stop </button>
+                  </div>
+              </div>
             <!-- skip scan QR, we can directly get PID, then redirect to appropriate step -->
 
+        <!-- <form action="/donate/search" method="post" class="login-form">
+            <div class="row d-flex justify-content-start align-items-center">
+              <div class="col-6 d-flex align-items-center">
+                <input id="qr-scan-value" type="text" name="PID" placeholder="PID" pattern="[0-9]+" title="Must contain digits" autocomplete="off" required>
+              </div>
+              <div class="col-6 d-flex align-items-center mb-20">
+                <button type="submit" class="btn-don-req">Search</button>
+              </div>
+            </div>
+        </form> -->
 
-      <form id="" action="/donate/search" method="post" class="login-form">
+      <form action="/donate/search" method="post" class="login-form">
           <div class="row d-flex justify-content-start align-items-center">
             <div class="col-6 d-flex align-items-center">
-              <input type="text" name="phone" placeholder="Search via Phone number" pattern="[1-9]{1}[0-9]{9}" title="Must contain 10 digits 0-9 , first digit can't be 0" autocomplete="off" required>
-          </div>
-          <div class="col-6 d-flex align-items-center mb-20">
+              <input id="qr-scan-value" type="text" name="phone" placeholder="Phone number" pattern="[1-9]{1}[0-9]{9}" title="Must contain 10 digits 0-9 , first digit can't be 0" autocomplete="off" required>
+            </div>
+            <div class="col-6 d-flex align-items-center mb-20">
               <button type="submit" class="btn-don-req">Search</button>
+            </div>
           </div>
-      </div>
-  </form>
+      </form>
                 <!-- get phonenumber then determine if account exsists:
                       if account doesnot exsists then create account and do the step1: [registration]
                       if account exsists then check status and redirect to appropriate step
@@ -235,6 +253,8 @@
 
 
 <!-- JS here -->
+<script src="https://rawgit.com/sitepoint-editors/jsqrcode/master/src/qr_packed.js"></script>
+<script src="./../assets/js/qrCodeScanner.js"></script>
 
 <script src="./../assets/js/vendor/modernizr-3.5.0.min.js"></script>
 <!-- Jquery, Popper, Bootstrap -->
