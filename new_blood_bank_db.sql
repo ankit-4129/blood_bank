@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Feb 14, 2021 at 07:38 AM
+-- Generation Time: Feb 15, 2021 at 12:35 PM
 -- Server version: 10.4.17-MariaDB
 -- PHP Version: 8.0.2
 
@@ -40,6 +40,7 @@ CREATE TABLE `blood_bag` (
 --
 
 INSERT INTO `blood_bag` (`BBID`, `BLID`, `status`, `blood_group`, `dis_reason`) VALUES
+(3750, 1, 'donated', 'A+', NULL),
 (4753, 1, 'available', 'B-', NULL),
 (8884, 1, 'available', 'O-', NULL),
 (17171, 1, 'donated', 'AB+', NULL),
@@ -126,7 +127,9 @@ INSERT INTO `donation_record` (`DID`, `PID`, `BDCID`, `BLID`, `BBID`, `donation_
 (4, 13, 2, NULL, 97979, '2021-02-11', 1, 1, 1, 1, 3),
 (5, 4, 2, NULL, 8884, '2021-02-11', 1, 1, 1, 1, 3),
 (6, 14, 2, NULL, 85277, '2021-02-11', 1, 1, 1, 1, 3),
-(7, 12, NULL, 2, 4753, '2021-02-13', 1, 0, 1, 0, 3);
+(7, 12, NULL, 2, 4753, '2021-02-13', 1, 0, 1, 0, 3),
+(8, 1, 1, NULL, NULL, '2021-02-14', NULL, NULL, NULL, NULL, 1),
+(9, 2, 1, NULL, 3750, '2021-02-14', 1, 1, 1, 1, 3);
 
 -- --------------------------------------------------------
 
@@ -147,8 +150,8 @@ CREATE TABLE `donor` (
 --
 
 INSERT INTO `donor` (`PID`, `weight`, `height`, `next_donation_date`, `previous_sms_date`) VALUES
-(1, '75.390', '117.800', '2021-05-11', '2021-02-10 18:30:00'),
-(2, '90.090', '150.040', '2021-05-11', '2021-02-10 18:30:00'),
+(1, '75.000', '175.000', '2021-05-14', '2021-02-13 18:30:00'),
+(2, '75.000', '175.360', '2021-05-14', '2021-02-13 18:30:00'),
 (4, '75.450', '153.680', '2021-05-11', '2021-02-10 18:30:00'),
 (12, '75.600', '143.390', '2021-05-13', '2021-02-12 18:30:00'),
 (13, '66.930', '45.360', '2021-05-11', '2021-02-10 18:30:00'),
@@ -178,13 +181,14 @@ CREATE TABLE `people` (
 --
 
 INSERT INTO `people` (`PID`, `full_name`, `phone_number`, `blood_group`, `DOB`, `email`, `password`, `verified`, `gender`, `user_type`) VALUES
-(1, 'Ankit Sharmaxx', 8003301320, 'O+', '2000-09-29', 'ankitsharma.rbt@gmail.com', '$2a$10$NjaKqgjax4NoOHgn8DduLucf6stckBQSzNzAZqnUlH7npWH3AJ4nO', 1, 'female', 'admin'),
+(1, 'Ankit Sharma', 8003301320, 'B+', '2000-09-29', 'ankitsharma.rbt@gmail.com', '$2a$10$NjaKqgjax4NoOHgn8DduLucf6stckBQSzNzAZqnUlH7npWH3AJ4nO', 1, 'male', 'admin'),
 (2, 'New Userref', 1122334455, 'A+', '2009-02-04', 'aa@aa.com', '$2a$10$AjvAJmQ2uwO52t554iDOpu0K1ckz.X3ZTzr.yKBtZKASqYQO3PJlC', 1, 'female', 'normal'),
 (3, 'New Dataentry', 1234567890, 'O+', '2013-06-14', 'de@de.com', '$2a$10$xJOHkNf7Tb9gbCSK9tikHuJUG9QqaPQoYFb5STruL3zEyx0x52wUi', 1, 'male', 'data-entry'),
 (4, 'New Admin', 7894561230, 'AB+', '2000-04-14', 'newad@no.com', '$2a$10$hM0VuVTz7Z80/Y2wRpdEYuRJow43g3eTRWm.CWm9fenuGD7yW0.MS', 1, 'male', 'admin'),
 (12, 'sa sds asd dataentry', 1122334457, 'O+', '2000-06-15', 'rr@rr.com', 'no password', 0, 'male', 'normal'),
 (13, 'dvdva dfv', 7788997777, 'O-', '2007-06-05', 'ww@ww.co', 'no password', 0, 'female', 'normal'),
-(14, 'fffe rfgref', 5245245254, 'A+', '2009-02-02', 'wer@d.in', 'no password', 0, 'male', 'normal');
+(14, 'fffe rfgref', 5245245254, 'A+', '2009-02-02', 'wer@d.in', 'no password', 0, 'male', 'normal'),
+(15, 'Nmsdf User', 8003301990, 'AB+', '2000-05-19', 'dsf@dsf.dsf', '$2a$10$/ZuAqSJCbNmOvgru7yLQZOWOUObYsyG6NsU.yU1ddUOyrbY9.g/jO', 0, 'male', 'normal');
 
 -- --------------------------------------------------------
 
@@ -206,7 +210,8 @@ CREATE TABLE `received_record` (
 
 INSERT INTO `received_record` (`RID`, `REID`, `received_date`, `amount`, `BBID`) VALUES
 (1, 1, '2021-02-13', 99, 17171),
-(2, 1, '2021-02-13', 94, 85277);
+(2, 1, '2021-02-13', 94, 85277),
+(3, 1, '2021-02-14', 45, 3750);
 
 -- --------------------------------------------------------
 
@@ -336,19 +341,19 @@ ALTER TABLE `blood_donation_camp`
 -- AUTO_INCREMENT for table `donation_record`
 --
 ALTER TABLE `donation_record`
-  MODIFY `DID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `DID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT for table `people`
 --
 ALTER TABLE `people`
-  MODIFY `PID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `PID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- AUTO_INCREMENT for table `received_record`
 --
 ALTER TABLE `received_record`
-  MODIFY `RID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `RID` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT for table `request`

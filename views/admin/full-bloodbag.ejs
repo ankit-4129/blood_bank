@@ -109,19 +109,20 @@
                                             <%}%>
 										</td>
 									</tr>
-
+                                    <%if(typeof receiver != "undefined"){%>
                                     <tr id="receiver-name">
                                         <td>Receiver's Name</td>
-                                        <td>Receiver Name</td>
+                                        <td><%=receiver[0].receiver_name%></td>
                                     </tr>
                                     <tr id="receiver-profile">
 										<td>Receiver's Profile</td>
-										<td><a href="full-people.html" target="_self">Link to profile</a></td>
+										<td><a href="/admin/full-people.html/<%=receiver[0].PID%>" target="_self">Link to profile</a></td>
 									</tr>
                                     <tr id="receiver-date">
                                         <td>Supplied On</td>
-                                        <td><input type="date" value="2020-12-31" disabled class="editable"></td>
+                                        <td><%=('0'+(receiver[0].received_date.getDate())).slice(-2)%>-<%=('0'+(receiver[0].received_date.getMonth()+1)).slice(-2)%>-<%=receiver[0].received_date.getFullYear()%></td>
                                     </tr>
+                                    <%}%>
                                 </table>
                                 <div class="container">
                                     <div class="row justify-content-between">

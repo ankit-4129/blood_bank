@@ -317,6 +317,34 @@ app.get(
   }
 );
 
+//person-requests
+app.get(
+  "/person-requests/:id",
+  [checkIfLogged, checkIfAdmin],
+  async (req, res) => {
+    await db.query(
+      `SELECT REID, receiver_name, request.blood_group, quantity, request_date, accepted
+      FROM people
+      INNER JOIN request ON people.PID = request.PID
+      WHERE people.PID = ?;`,
+      req.params["id"],
+      function (error, result, fields) {
+        if (error) {
+          console.log(error);
+        } else {
+          var requests = result;
+
+          res.render("admin/admin-request", {
+            logged: req.session.admin,
+            requests: result,
+            status: "pending",
+          });
+        }
+      }
+    );
+  }
+);
+
 // app.get("/admin/full-camps/filter", async (req, res) => {
 //   res.redirect("/admin/admin-camps.html");
 // });
@@ -644,7 +672,11 @@ app.get(
   [checkIfLogged, checkIfAdmin],
   async (req, res) => {
     await db.query(
-      "SELECT * FROM blood_bag,donation_record,people WHERE  blood_bag.BBID=? AND blood_bag.BBID=donation_record.BBID AND people.PID=donation_record.PID",
+      `SELECT blood_bag.*, donation_date, full_name, people.PID
+      FROM blood_bag
+      INNER JOIN donation_record ON donation_record.BBID=blood_bag.BBID
+      INNER JOIN people ON people.PID=donation_record.PID
+      WHERE blood_bag.BBID=?;`,
       req.params["id"],
       async (error, result, fields) => {
         if (error) {
@@ -652,10 +684,32 @@ app.get(
           res.redirect("/");
         } else {
           console.log(result);
-          res.render("admin/full-bloodbag", {
-            logged: req.session.admin,
-            blood_bag: result,
-          });
+          if(JSON.parse(JSON.stringify(result[0])).status == "donated"){
+              await db.query(
+                  `SELECT received_date, receiver_name, PID FROM received_record
+                  INNER JOIN request ON request.REID=received_record.REID
+                  WHERE BBID=?;`,
+                  req.params["id"],
+                  async (error, rec_result, fields) => {
+                      if (error) {
+                        console.log(error);
+                        res.redirect("/");
+                      } else {
+                        console.log(rec_result);
+                        res.render("admin/full-bloodbag", {
+                          logged: req.session.admin,
+                          blood_bag: result,
+                          receiver : rec_result,
+                        });
+                      }
+                  }
+              );
+          } else {
+              res.render("admin/full-bloodbag", {
+                logged: req.session.admin,
+                blood_bag: result,
+              });
+          }
         }
       }
     );
