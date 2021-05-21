@@ -65,8 +65,8 @@ var nodemailer = require("nodemailer");
 var transporter = nodemailer.createTransport({
   service: "gmail",
   auth: {
-    user: "harshitapi46@gmail.com",
-    pass: "Harshit46",
+    user: "dummy",
+    pass: "pass",
   },
 });
 
@@ -84,7 +84,7 @@ router.get("/sendmails", checkIfLogged, async (req, res) => {
         //for (var i = 0; i < 5; i++) {
         for (var i = 0; false; i++) {
           var mailOptions = {
-            from: "2019284@iiitdmj.ac.in",
+            from: "dummymail",
             to: result[i].email,
             subject: "Blood Request",
             text: "Uregnt help needed please donate blood",

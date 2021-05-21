@@ -57,7 +57,8 @@
                                 </div>
                             </div>
                             <!-- form -->
-                            <form action="#" method="post">
+                            <form action="/edit/edit-bloodbag" method="post">
+                                <input type="text" name="BBID" value="<%=blood_bag[0].BBID%>" hidden>
                                 <table class="table table-striped record">
                                     <tr>
                                         <td>Blood Bag ID</td>
@@ -89,16 +90,16 @@
                                     </tr>
                                     <tr>
                                         <td>Donation Date</td>
-                                        <td><input type="date" size="10" value="<%=blood_bag[0].donation_date.getFullYear()%>-<%=('0'+(blood_bag[0].donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(blood_bag[0].donation_date.getDate())).slice(-2)%>" required disabled class="editable"></td>
+                                        <td><input type="date" size="10" value="<%=blood_bag[0].donation_date.getFullYear()%>-<%=('0'+(blood_bag[0].donation_date.getMonth()+1)).slice(-2)%>-<%=('0'+(blood_bag[0].donation_date.getDate())).slice(-2)%>" required disabled></td>
                                     </tr>
                                     <tr>
 										<td>Status</td>
 										<td>
-											<input type="radio" id="avail" name="status" value="Available" disabled class="editable" onclick="hide_fields();">
+											<input type="radio" id="avail" name="status" value="available" disabled class="editable" onclick="hide_fields();">
 											<label for="avail" class="mr-50">Available</label>
-											<input type="radio" id="don" name="status" value="Donated" disabled class="editable"  onclick="hide_fields();">
+											<input type="radio" id="don" name="status" value="donated" disabled class="editable"  onclick="hide_fields();">
 											<label for="don" class="mr-50">Donated</label>
-                                            <input type="radio" id="dis" name="status" value="Discarded" disabled class="editable"  onclick="hide_fields();">
+                                            <input type="radio" id="dis" name="status" value="discarded" disabled class="editable"  onclick="hide_fields();">
                                             <label for="dis">Discarded</label>
                                             <%if(blood_bag[0].status=="available"){%>
                                                 <script>document.getElementById("avail").checked = "true";</script>
@@ -109,27 +110,27 @@
                                             <%}%>
 										</td>
 									</tr>
-                                    <%if(typeof receiver != "undefined"){%>
-                                    <tr id="receiver-name">
-                                        <td>Receiver's Name</td>
-                                        <td><%=receiver[0].receiver_name%></td>
-                                    </tr>
-                                    <tr id="receiver-profile">
-										<td>Receiver's Profile</td>
-										<td><a href="/admin/full-people.html/<%=receiver[0].PID%>" target="_self">Link to profile</a></td>
-									</tr>
-                                    <tr id="receiver-date">
-                                        <td>Supplied On</td>
-                                        <td><%=('0'+(receiver[0].received_date.getDate())).slice(-2)%>-<%=('0'+(receiver[0].received_date.getMonth()+1)).slice(-2)%>-<%=receiver[0].received_date.getFullYear()%></td>
-                                    </tr>
+                                    <%if(typeof receiver != "undefined" && typeof receiver[0] != "undefined"){%>
+                                        <tr id="receiver-name">
+                                            <td>Receiver's Name</td>
+                                            <td><%=receiver[0].receiver_name%></td>
+                                        </tr>
+                                        <tr id="receiver-profile">
+    										<td>Receiver's Profile</td>
+    										<td><a href="/admin/full-people.html/<%=receiver[0].PID%>" target="_self">Link to profile</a></td>
+    									</tr>
+                                        <tr id="receiver-date">
+                                            <td>Supplied On</td>
+                                            <td><%=('0'+(receiver[0].received_date.getDate())).slice(-2)%>-<%=('0'+(receiver[0].received_date.getMonth()+1)).slice(-2)%>-<%=receiver[0].received_date.getFullYear()%></td>
+                                        </tr>
                                     <%}%>
                                 </table>
                                 <div class="container">
                                     <div class="row justify-content-between">
                                         <button type="button" onclick="edit_btn();" class="genric-btn info circle" id="btn-edit">Edit</button>
                                         <button type="button" onclick="cancel_btn();hide_fields()" class="genric-btn info" id="btn-cancel">Cancel</button>
-                                        <button type="button" onclick="update_btn();hide_fields()" class="genric-btn info" id="btn-update">Update</button>
-                                        <button type="button" onclick="delete_btn();hide_fields()" class="genric-btn danger" id="btn-delete">Delete</button>
+                                        <button type="submit" name="submit" value="update" onclick="return confirm('Do you really want to update?');" class="genric-btn info" id="btn-update">Update</button>
+                                        <button type="submit" name="submit" value="delete" onclick="delete_btn();hide_fields()" class="genric-btn danger" id="btn-delete">Delete</button>
                                     </div>
                                 </div>
                             </form>

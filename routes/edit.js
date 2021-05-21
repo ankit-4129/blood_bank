@@ -271,4 +271,23 @@ router.post("/received", async (req, res) => {
 
 });
 
+
+router.post("/edit-bloodbag", async (req, res) => {
+      console.log(req.body);
+      db.query(
+        `UPDATE blood_bag SET blood_group = ?, status = ? WHERE BBID = ?;`,
+        [req.body.blood_group, req.body.status, req.body.BBID],
+        function (error, results, fields) {
+          if (error) {
+            console.log(error);
+            res.send("error");
+          } else {
+            console.log("edited blood bag");
+            console.log("Rows affected:", results.affectedRows);
+            res.redirect(`/admin/admin-bloodbank.html`);
+          }
+        }
+      );
+});
+
 module.exports = router;
